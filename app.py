@@ -11,10 +11,13 @@ def combine_excel_files(folder_path):
             print(filename)
             # Create full file path
             file_path = os.path.join(folder_path, filename)
-            
+
             # Read the Excel file
             df = pd.read_excel(file_path)
-            
+
+            # add file name to df
+            df['Archivo'] = filename
+
             # Append to our list
             all_data.append(df)
 
@@ -34,13 +37,13 @@ def add_maquinaria_categorization(df):
 
     # remove duplicates in column Conc
     maquinaria_categorization_df = maquinaria_categorization_df.drop_duplicates(subset=["Conc"])
-    
+
     # Create a mapping dictionary from Conc to Tipo and Categoria
     maquinaria_categorization_dict = maquinaria_categorization_df.set_index("Conc").to_dict(orient="index")
 
     # Initialize blank df to store new rows
     new_maquinaria_categorization_df = pd.DataFrame(columns=["Conc"])
-    
+
     # Categorize the combined mayor with maquinaria data
     for index, row in df.iterrows():
         if row["Conc"] in maquinaria_categorization_dict:
