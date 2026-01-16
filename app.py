@@ -15,9 +15,6 @@ def combine_excel_files(folder_path):
             # Read the Excel file
             df = pd.read_excel(file_path)
 
-            # add file name to df
-            df['Archivo'] = filename
-
             # Append to our list
             all_data.append(df)
 
